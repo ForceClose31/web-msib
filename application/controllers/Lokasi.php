@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @property CI_Input $input
  */
 
-class LokasiController extends CI_Controller
+class Lokasi extends CI_Controller
 {
     public function create()
     {

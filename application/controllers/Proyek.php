@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 /**
  * @property CI_Input $input
  */
-class ProyekController extends CI_Controller
+class Proyek extends CI_Controller
 {
     public function create()
     {

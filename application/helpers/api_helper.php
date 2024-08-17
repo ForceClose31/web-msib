@@ -1,51 +1,40 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('call_spring_api')) {
-    /**
-     * Call a REST API using cURL.
-     *
-     * @param string $method HTTP method (GET, POST, PUT, DELETE).
-     * @param string $url API URL to call.
-     * @param array|false $data Data to send with the request (for POST, PUT).
-     * @return array|bool Decoded JSON response as an array, or false on failure.
-     */
-    function call_spring_api($method, $url, $data = false)
+if ( ! function_exists('call_spring_api'))
+{
+    function call_spring_api($method, $url, $data = array())
     {
-        $curl = curl_init();
+        $CI =& get_instance();
+        $CI->load->library('curl');
 
-        switch ($method) {
-            case "POST":
-                curl_setopt($curl, CURLOPT_POST, 1);
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
-                break;
-            case "PUT":
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
-                break;
-            case "DELETE":
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-                break;
-            default: // GET
-                if ($data)
-                    $url = sprintf("%s?%s", $url, http_build_query($data));
-        }
-
-        // OPTIONS:
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+        $CI->curl->create($url);
+        $headers = array(
             'Content-Type: application/json',
-        ));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            'Accept: application/json'
+        );
+        $CI->curl->option(CURLOPT_HTTPHEADER, $headers);
+        $json_data = json_encode($data);
 
-        // EXECUTE:
-        $result = curl_exec($curl);
-        if (!$result) {
-            die("Connection Failure");
+        switch (strtoupper($method)) {
+            case 'GET':
+                $CI->curl->http_get();
+                break;
+            case 'POST':
+                $CI->curl->http_post($json_data);
+                break;
+            case 'PUT':
+                $CI->curl->http_put($json_data);
+                break;
+            case 'DELETE':
+                $CI->curl->http_delete($json_data);
+                break;
+            default:
+                throw new Exception("Unsupported HTTP method: $method");
         }
-        curl_close($curl);
 
-        return json_decode($result, true);
+        $response = $CI->curl->execute();
+        return json_decode($response, true);
     }
 }
+?>
