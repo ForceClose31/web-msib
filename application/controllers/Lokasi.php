@@ -9,7 +9,12 @@ class Lokasi extends CI_Controller
 {
     public function create()
     {
+
+        $title = ['title' => "Create Data Location"];
+
+        $this->load->view('templates/header', $title);
         $this->load->view('lokasi_create');
+        $this->load->view('templates/footer');
     }
 
     public function store()
@@ -33,7 +38,11 @@ class Lokasi extends CI_Controller
     {
         $lokasi = call_spring_api('GET', "http://localhost:8080/lokasi/$id");
         $data['lokasi'] = $lokasi;
+        $title = ['title' => "Edit Data Location"];
+
+        $this->load->view('templates/header', $title);
         $this->load->view('lokasi_edit', $data);
+        $this->load->view('templates/footer');
     }
 
     public function update($id)

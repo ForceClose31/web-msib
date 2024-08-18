@@ -9,7 +9,12 @@ class Proyek extends CI_Controller
     {
         $locations = call_spring_api('GET', 'http://localhost:8080/lokasi');
         $data['locations'] = $locations;
+
+        $title = ['title' => "Create Data Project"];
+
+		$this->load->view('templates/header', $title); 
         $this->load->view('proyek_create', $data);
+		$this->load->view('templates/footer');
     }
 
     public function store()
@@ -65,7 +70,12 @@ class Proyek extends CI_Controller
             'proyek' => $proyek,
             'locations' => $locations
         ];
+
+        $title = ['title' => "Edit Data Project"];
+
+        $this->load->view('templates/header', $title); 
         $this->load->view('proyek_edit', $data);
+		$this->load->view('templates/footer');
     }
 
 

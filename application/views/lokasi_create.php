@@ -1,26 +1,21 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
-?>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Tambah Lokasi</title>
-</head>
-
-<body>
-    <h1>Tambah Lokasi Baru</h1>
-    <form action="<?php echo site_url('lokasi/store'); ?>" method="post">
-        <label>Nama Lokasi:</label>
-        <input type="text" name="nama_lokasi" required><br>
-        <label>Negara:</label>
-        <input type="text" name="negara" required><br>
-        <label>Provinsi:</label>
-        <input type="text" name="provinsi" required><br>
-        <label>Kota:</label>
-        <input type="text" name="kota" required><br>
-        <button type="submit">Simpan</button>
-    </form>
-</body>
-
-</html>
+<h1>Tambah Lokasi Baru</h1>
+<form action="<?php echo site_url('lokasi/store'); ?>" method="post">
+    <div class="form-group">
+        <label for="nama_lokasi">Nama Lokasi:</label>
+        <input type="text" class="form-control" id="nama_lokasi" name="nama_lokasi" required>
+    </div>
+    <div class="form-group">
+        <label for="negara">Negara:</label>
+        <input type="text" class="form-control" id="negara" name="negara" required>
+    </div>
+    <div class="form-group">
+        <label for="provinsi">Provinsi:</label>
+        <input type="text" class="form-control" id="provinsi" name="provinsi" required>
+    </div>
+    <div class="form-group">
+        <label for="kota">Kota:</label>
+        <input type="text" class="form-control" id="kota" name="kota" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="<?php echo site_url('welcome'); ?>" class="btn btn-secondary">Kembali</a>
+</form>

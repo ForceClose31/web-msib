@@ -10,9 +10,13 @@ class Welcome extends CI_Controller
 
 		$data = [
 			'projects' => $projects,
-			'locations' => $locations
+			'locations' => $locations,
+			'title' => "Homepage"
 		];
 
-		$this->load->view('home', $data);
+		
+		$this->load->view('templates/header', $data); 
+		$this->load->view('home', $data); 
+		$this->load->view('templates/footer_home');
 	}
 }

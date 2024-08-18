@@ -1,17 +1,7 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
-?>
-<!DOCTYPE html>
-<html>
-
-<head>
-	<title>Halaman Utama</title>
-</head>
-
-<body>
-	<h1>Daftar Proyek</h1>
-	<a href="<?php echo site_url('proyek/create'); ?>">Tambah Proyek Baru</a>
-	<table border="1">
+<h1 class="mb-4">Daftar Proyek</h1>
+<a href="<?php echo site_url('proyek/create'); ?>" class="btn btn-primary mb-3">Tambah Proyek Baru</a>
+<table class="table table-striped table-bordered">
+	<thead>
 		<tr>
 			<th>ID</th>
 			<th>Nama Proyek</th>
@@ -22,6 +12,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<th>Keterangan</th>
 			<th>Actions</th>
 		</tr>
+	</thead>
+	<tbody>
 		<?php foreach ($projects as $project) { ?>
 			<tr>
 				<td><?php echo $project['id']; ?></td>
@@ -32,16 +24,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<td><?php echo $project['pimpinanProyek']; ?></td>
 				<td><?php echo $project['keterangan']; ?></td>
 				<td>
-					<a href="<?php echo site_url('proyek/edit/' . $project['id']); ?>">Edit</a> |
-					<a href="<?php echo site_url('proyek/delete/' . $project['id']); ?>">Delete</a>
+					<a href="<?php echo site_url('proyek/edit/' . $project['id']); ?>" class="btn btn-warning btn-sm">Edit</a>
+					<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" data-id="<?php echo $project['id']; ?>" data-type="proyek">Delete</button>
 				</td>
 			</tr>
 		<?php } ?>
-	</table>
+	</tbody>
+</table>
 
-	<h1>Daftar Lokasi</h1>
-	<a href="<?php echo site_url('lokasi/create'); ?>">Tambah Lokasi Baru</a>
-	<table border="1">
+<h1 class="mt-4 mb-4">Daftar Lokasi</h1>
+<a href="<?php echo site_url('lokasi/create'); ?>" class="btn btn-primary mb-3">Tambah Lokasi Baru</a>
+<table class="table table-striped table-bordered">
+	<thead>
 		<tr>
 			<th>ID</th>
 			<th>Nama Lokasi</th>
@@ -50,6 +44,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<th>Kota</th>
 			<th>Actions</th>
 		</tr>
+	</thead>
+	<tbody>
 		<?php foreach ($locations as $location) { ?>
 			<tr>
 				<td><?php echo $location['id']; ?></td>
@@ -58,12 +54,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<td><?php echo $location['provinsi']; ?></td>
 				<td><?php echo $location['kota']; ?></td>
 				<td>
-					<a href="<?php echo site_url('lokasi/edit/' . $location['id']); ?>">Edit</a> |
-					<a href="<?php echo site_url('lokasi/delete/' . $location['id']); ?>">Delete</a>
+					<a href="<?php echo site_url('lokasi/edit/' . $location['id']); ?>" class="btn btn-warning btn-sm">Edit</a>
+					<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" data-id="<?php echo $location['id']; ?>" data-type="lokasi">Delete</button>
 				</td>
 			</tr>
 		<?php } ?>
-	</table>
-</body>
-
-</html>
+	</tbody>
+</table>
