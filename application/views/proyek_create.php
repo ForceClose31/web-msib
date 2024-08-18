@@ -3,9 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Tambah Proyek</title>
 </head>
+
 <body>
     <h1>Tambah Proyek Baru</h1>
     <form action="<?php echo site_url('proyek/store'); ?>" method="post">
@@ -24,10 +26,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <label>Lokasi:</label>
         <select name="locations[]" multiple>
             <?php foreach ($locations as $location) { ?>
-                <option value="<?php echo $location['id']; ?>"><?php echo $location['namaLokasi']; ?></option>
+                <option value=<?php echo $location['id']; ?>><?php echo $location['namaLokasi']; ?></option>
             <?php } ?>
         </select><br>
         <button type="submit">Simpan</button>
     </form>
 </body>
+
 </html>

@@ -22,10 +22,30 @@ class Proyek extends CI_Controller
                 'tglSelesai' => $this->input->post('tgl_selesai'),
                 'pimpinanProyek' => $this->input->post('pimpinan_proyek'),
                 'keterangan' => $this->input->post('keterangan'),
-                'locations' => $this->input->post('locations') 
             );
 
-            $response = call_spring_api('POST', 'http://localhost:8080/proyek', $proyek_data);
+            $lokasiIds = $this->input->post('locations');
+            if (!is_array($lokasiIds)) {
+                $lokasiIds = [];
+            }
+
+            $formatted_lokasiIds = array_map(function ($id) {
+                return ['id' => intval($id)];
+            }, $lokasiIds);
+
+            $json_data = json_encode([
+                'proyek' => $proyek_data,
+                'lokasiIds' => $formatted_lokasiIds
+            ]);
+
+            log_message('debug', 'JSON Data: ' . $json_data);
+
+            $headers = array(
+                'Content-Type: application/json',
+                'Accept: application/json'
+            );
+
+            $response = call_spring_api('POST', 'http://localhost:8080/proyek', $json_data);
             if ($response) {
                 redirect('welcome');
             }
@@ -36,12 +56,18 @@ class Proyek extends CI_Controller
     {
         $proyek = call_spring_api('GET', "http://localhost:8080/proyek/$id");
         $locations = call_spring_api('GET', 'http://localhost:8080/lokasi');
+
+        if (!isset($proyek['locations'])) {
+            $proyek['locations'] = [];
+        }
+
         $data = [
             'proyek' => $proyek,
             'locations' => $locations
         ];
         $this->load->view('proyek_edit', $data);
     }
+
 
     public function update($id)
     {
@@ -53,10 +79,28 @@ class Proyek extends CI_Controller
                 'tglSelesai' => $this->input->post('tgl_selesai'),
                 'pimpinanProyek' => $this->input->post('pimpinan_proyek'),
                 'keterangan' => $this->input->post('keterangan'),
-                'locations' => $this->input->post('locations') 
             );
 
-            $response = call_spring_api('PUT', "http://localhost:8080/proyek/$id", $proyek_data);
+            $lokasiIds = $this->input->post('locations');
+            if (!is_array($lokasiIds)) {
+                $lokasiIds = [];
+            }
+
+            $formatted_lokasiIds = array_map(function ($id) {
+                return ['id' => intval($id)];
+            }, $lokasiIds);
+
+            $json_data = json_encode([
+                'proyek' => $proyek_data,
+                'lokasiIds' => $formatted_lokasiIds
+            ]);
+
+            $headers = array(
+                'Content-Type: application/json',
+                'Accept: application/json'
+            );
+
+            $response = call_spring_api('PUT', "http://localhost:8080/proyek/$id", $json_data);
             if ($response) {
                 redirect('welcome');
             }
@@ -68,5 +112,4 @@ class Proyek extends CI_Controller
         $response = call_spring_api('DELETE', "http://localhost:8080/proyek/$id");
         redirect('welcome');
     }
-
 }
